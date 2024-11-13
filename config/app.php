@@ -43,6 +43,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Background log file configurations
+    |--------------------------------------------------------------------------
+    |
+    | You can customise where to put your background log file here
+    |
+    */
+
+    'background_log_directory' => env('BACKGROUND_LOG_DIRECTORY', false),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application URL
     |--------------------------------------------------------------------------
     |

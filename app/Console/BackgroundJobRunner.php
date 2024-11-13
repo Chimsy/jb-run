@@ -10,7 +10,7 @@ class BackgroundJobRunner
     public function run($className, $method, $params = []): void
     {
         //TODO: Create the logfile as an ENV variable
-        $logFile = storage_path('logs/background_jobs.log');
+        $logFile = storage_path(config('app.background_log_directory'));
 
         try {
             if (!class_exists($className)) {
@@ -27,7 +27,7 @@ class BackgroundJobRunner
         } catch (Exception $e) {
             $this->logJobExecution($logFile, $className, $method, 'failure', $e->getMessage());
         }
-        
+
     }
 
     private function logJobExecution($logFile, $className, $method, $status, $errorMessage = ''): void
