@@ -1,4 +1,5 @@
 <?php
+namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -9,8 +10,8 @@ class UsersTableSeeder extends Seeder
     {
         $users = [[
             'id'             => 1,
-            'name'           => 'Admin',
-            'email'          => 'admin@admin.com',
+            'name'           => 'Tapfuma Golden Chimusinde',
+            'email'          => 'goldenchimsy@gmail.com',
             'password'       => '$2y$10$imU.Hdz7VauIT3LIMCMbsOXvaaTQg6luVqkhfkBcsUd.SJW2XSRKO',
             'remember_token' => null,
             'created_at'     => '2019-04-15 19:13:32',
