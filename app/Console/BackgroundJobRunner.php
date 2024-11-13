@@ -2,14 +2,12 @@
 
 namespace App\Console;
 
-
 use Exception;
 
 class BackgroundJobRunner
 {
     public function run($className, $method, $params = []): void
     {
-        //TODO: Create the logfile as an ENV variable
         $logFile = storage_path(config('app.background_log_directory'));
 
         try {
@@ -27,7 +25,6 @@ class BackgroundJobRunner
         } catch (Exception $e) {
             $this->logJobExecution($logFile, $className, $method, 'failure', $e->getMessage());
         }
-
     }
 
     private function logJobExecution($logFile, $className, $method, $status, $errorMessage = ''): void
@@ -41,8 +38,3 @@ class BackgroundJobRunner
         file_put_contents($logFile, $logMessage . PHP_EOL, FILE_APPEND);
     }
 }
-
-// Example usage
-$jobRunner = new BackgroundJobRunner();
-$jobRunner->run('SomeClass', 'someMethod', ['param1', 'param2']);
-
