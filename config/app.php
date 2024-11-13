@@ -50,7 +50,7 @@ return [
     |
     */
 
-    'background_log_directory' => env('BACKGROUND_LOG_DIRECTORY', false),
+    'background_log_directory' => env('BACKGROUND_LOG_DIRECTORY', 'logs/background_jobs.log'),
 
     /*
     |--------------------------------------------------------------------------
