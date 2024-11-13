@@ -15,7 +15,7 @@ class RunBackgroundJob extends Command
         parent::__construct();
     }
 
-    public function handle()
+    public function handle(): void
     {
         $className = $this->argument('className');
         $method = $this->argument('method');

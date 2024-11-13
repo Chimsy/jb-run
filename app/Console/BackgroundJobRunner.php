@@ -6,7 +6,7 @@ use Exception;
 
 class BackgroundJobRunner
 {
-    protected $maxRetries;
+    protected int $maxRetries;
 
     // TODO: Make Number of MaxRetries Configurable
     public function __construct($maxRetries = 3)
@@ -21,31 +21,42 @@ class BackgroundJobRunner
         $retries = 0;
         $success = false;
 
+        $approvedClasses = config('background_jobs.approved_classes');
+
+        $className = filter_var($className, FILTER_SANITIZE_STRING);
+        $method = filter_var($method, FILTER_SANITIZE_STRING);
+
+        if (!in_array($className, $approvedClasses)) {
+            $this->logJobExecution($errorLogFile, $className, $method, 'FAILED', 'Class Not Approved');
+            return;
+        }
+
         while ($retries < $this->maxRetries && !$success) {
             try {
                 if (!class_exists($className)) {
-                    throw new Exception("Class $className not found.");
+                    throw new Exception("Class $className Not Found.");
                 }
                 $classInstance = new $className();
 
                 if (!method_exists($classInstance, $method)) {
-                    throw new Exception("Method $method not found in class $className.");
+                    throw new Exception("Method $method Not Found in Class $className.");
                 }
 
-                $this->logJobExecution($logFile, $className, $method, 'running');
+                // Log job is running
+                $this->logJobExecution($logFile, $className, $method, 'RUNNING');
 
                 call_user_func_array([$classInstance, $method], $params);
 
-                $this->logJobExecution($logFile, $className, $method, 'completed');
+                // Log job success
+                $this->logJobExecution($logFile, $className, $method, 'COMPLETED');
                 $success = true;
 
             } catch (Exception $e) {
                 $retries++;
-
-                $this->logJobExecution($errorLogFile, $className, $method, 'failed', $e->getMessage());
+                $this->logJobExecution($errorLogFile, $className, $method, 'FAILED', $e->getMessage());
 
                 if ($retries >= $this->maxRetries) {
-                    $this->logJobExecution($logFile, $className, $method, 'failed');
+                    $this->logJobExecution($logFile, $className, $method, 'FAILED');
                 }
             }
         }
@@ -55,7 +66,7 @@ class BackgroundJobRunner
     {
         $logMessage = date('Y-m-d H:i:s') . " - Class: $className, Method: $method, Status: $status";
 
-        if ($status == 'failed') {
+        if ($status == 'FAILED') {
             $logMessage .= ", Error: $errorMessage";
         }
 
