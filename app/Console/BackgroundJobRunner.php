@@ -55,7 +55,7 @@ class BackgroundJobRunner
     {
         $logMessage = date('Y-m-d H:i:s') . " - Class: $className, Method: $method, Status: $status";
 
-        if ($status == 'failure') {
+        if ($status == 'failed') {
             $logMessage .= ", Error: $errorMessage";
         }
 
