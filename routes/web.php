@@ -1,10 +1,14 @@
 <?php
+
+use App\Http\Controllers\BackgroundJobController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::redirect('/', '/login');
+//Route::redirect('/', '/login');
 
+Route::get('/', [BackgroundJobController::class, 'index']);
 Route::redirect('/home', '/admin');
+
 
 Auth::routes(['register' => false]);
 
