@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 class BackgroundJobHelper
 {
-    public static function runBackgroundJob($className, $method, $params = []): void
+    public static function runBackgroundJob($className, $method, $params = [], $delay = 0): void
     {
         // Build the command to run the job in the background
         $command = 'php '
@@ -12,7 +12,8 @@ class BackgroundJobHelper
             . escapeshellarg($className) . ' '
             . escapeshellarg($method) . ' '
             . escapeshellarg(json_encode($params)) . ' --retries='
-            . escapeshellarg(config('app.max_retries'));
+            . escapeshellarg(config('app.max_retries')) . ' --delay='
+            . escapeshellarg($delay);
 
         // Log the command being executed for debugging
         file_put_contents(storage_path(config('app.background_log_directory')),

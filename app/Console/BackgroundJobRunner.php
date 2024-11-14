@@ -7,7 +7,7 @@ use App\Models\BackgroundJob;
 
 class BackgroundJobRunner
 {
-    public function run($className, $method, $params = []): void
+    public function run($className, $method, $params = [], $delay = 0): void
     {
         $approvedClasses = config('background_jobs.approved_classes');
         $maxRetries = config('app.max_retries');
@@ -17,7 +17,6 @@ class BackgroundJobRunner
 
         $retries = 0;
         $success = false;
-
 
         $className = filter_var($className, FILTER_SANITIZE_STRING);
         $method = filter_var($method, FILTER_SANITIZE_STRING);
@@ -32,8 +31,13 @@ class BackgroundJobRunner
             'class_name' => $className,
             'method_name' => $method,
             'params' => json_encode($params),
-            'status' => 'running',
+            'status' => 'RUNNING',
         ]);
+
+        // Delay the execution if delay is specified
+        if ($delay > 0) {
+            sleep($delay);
+        }
 
         while ($retries < $maxRetries && !$success) {
             try {
@@ -51,7 +55,7 @@ class BackgroundJobRunner
 
                 call_user_func_array([$classInstance, $method], $params);
 
-                $job->update(['status' => 'completed', 'is_running' => false]);
+                $job->update(['status' => 'COMPLETED', 'is_running' => false]);
 
                 $this->logJobExecution($logFile, $className, $method, 'COMPLETED');
                 $success = true;
@@ -60,8 +64,7 @@ class BackgroundJobRunner
                 $retries++;
 
                 $job->increment('retry_count');
-                $job->update(['status' => 'failed', 'error_message' => $e->getMessage(), 'is_running' => false]);
-
+                $job->update(['status' => 'FAILED', 'error_message' => $e->getMessage(), 'is_running' => false]);
 
                 $this->logJobExecution($errorLogFile, $className, $method, 'FAILED', $e->getMessage());
 
@@ -82,5 +85,4 @@ class BackgroundJobRunner
 
         file_put_contents($logFile, $logMessage . PHP_EOL, FILE_APPEND);
     }
-
 }

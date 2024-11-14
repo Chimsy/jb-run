@@ -13,14 +13,14 @@
         <table class="table">
             <thead>
             <tr>
-                <th>ID</th>
+                <th>#</th>
+                <th>TimeStamp</th>
                 <th>Class</th>
                 <th>Method</th>
                 <th>Parameters</th>
                 <th>Status</th>
+                <th>Retry Count</th>
                 <th>Error Message</th>
-                <th>Created At</th>
-                <th>Updated At</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -28,15 +28,15 @@
             @foreach ($jobs as $job)
                 <tr>
                     <td>{{ $job->id }}</td>
+                    <td>{{ $job->created_at }}</td>
                     <td>{{ $job->class_name }}</td>
                     <td>{{ $job->method_name }}</td>
                     <td>{{ $job->params }}</td>
                     <td>{{ $job->status }}</td>
+                    <td>{{ $job->retry_count }}</td>
                     <td>{{ $job->error_message }}</td>
-                    <td>{{ $job->created_at }}</td>
-                    <td>{{ $job->updated_at }}</td>
                     <td>
-                        @if ($job->status == 'RUNNING')
+                        @if ($job->status == 'running')
                             <form action="{{ route('background-jobs.cancel', $job->id) }}" method="POST">
                                 @csrf
                                 <button type="submit" class="btn btn-danger">Cancel</button>
