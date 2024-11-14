@@ -11,11 +11,17 @@ class HomeController
     public function index()
     {
 
-//        $jobRunner = new BackgroundJobRunner();
-//        $jobRunner->run('App\Services\SomeClass', 'someMethod', ['param1', 'param2']);
+        $jobRunner = new BackgroundJobRunner();
+        $jobRunner->run(
+            'App\Services\SomeClass',
+            'someMethod', ['paramA', 'paramB']
+        );
 
         // Run the background job
-//        BackgroundJobHelper::runBackgroundJob('App\Services\SomeClass', 'someMethod', ['param1', 'param2']);
+        BackgroundJobHelper::runBackgroundJob(
+            'App\Services\SomeClass',
+            'someMethod', ['paramX', 'paramY']
+        );
 
         return view('home');
     }

@@ -30,6 +30,7 @@ class BackgroundJobRunner
                 if (!class_exists($className)) {
                     throw new Exception("Class $className Not Found.");
                 }
+
                 $classInstance = new $className();
 
                 if (!method_exists($classInstance, $method)) {
