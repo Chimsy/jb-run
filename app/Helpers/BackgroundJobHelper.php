@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 class BackgroundJobHelper
 {
-    public static function runBackgroundJob($className, $method, $params = [], $delay = 0): void
+    public static function runBackgroundJob($className, $method, $params = [], $priority = 0, $delay = 0): void
     {
         // Build the command to run the job in the background
         $command = 'php '

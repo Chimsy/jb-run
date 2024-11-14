@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('class_name');
             $table->string('method_name');
             $table->text('params')->nullable();
+            $table->integer('priority')->default(0);
             $table->string('status');
             $table->text('error_message')->nullable();
             $table->integer('retry_count')->default(0);

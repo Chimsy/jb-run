@@ -2,8 +2,8 @@
 
 namespace App\Console;
 
-use Exception;
 use App\Models\BackgroundJob;
+use Exception;
 
 class BackgroundJobRunner
 {

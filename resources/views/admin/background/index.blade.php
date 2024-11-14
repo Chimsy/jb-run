@@ -14,12 +14,13 @@
             <thead>
             <tr>
                 <th>#</th>
-                <th>TimeStamp</th>
+                <th>Timestamp</th>
                 <th>Class</th>
                 <th>Method</th>
                 <th>Parameters</th>
                 <th>Status</th>
                 <th>Retry Count</th>
+                <th>Priority</th>
                 <th>Error Message</th>
                 <th>Actions</th>
             </tr>
@@ -34,6 +35,7 @@
                     <td>{{ $job->params }}</td>
                     <td>{{ $job->status }}</td>
                     <td>{{ $job->retry_count }}</td>
+                    <td>{{ $job->priority }}</td>
                     <td>{{ $job->error_message }}</td>
                     <td>
                         @if ($job->status == 'running')
