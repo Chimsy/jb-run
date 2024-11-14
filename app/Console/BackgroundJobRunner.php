@@ -6,18 +6,12 @@ use Exception;
 
 class BackgroundJobRunner
 {
-    protected int $maxRetries;
-
-    // TODO: Make Number of MaxRetries Configurable
-    public function __construct($maxRetries = 3)
-    {
-        $this->maxRetries = $maxRetries;
-    }
-
     public function run($className, $method, $params = []): void
     {
-        $logFile = storage_path('logs/background_jobs.log');
-        $errorLogFile = storage_path('logs/background_jobs_errors.log');
+        $logFile = storage_path(config('app.background_log_directory'));
+        $errorLogFile = storage_path(config('app.background_error_log_directory'));
+        $maxRetries = config('app.max_retries');
+
         $retries = 0;
         $success = false;
 
@@ -31,7 +25,7 @@ class BackgroundJobRunner
             return;
         }
 
-        while ($retries < $this->maxRetries && !$success) {
+        while ($retries < $maxRetries && !$success) {
             try {
                 if (!class_exists($className)) {
                     throw new Exception("Class $className Not Found.");

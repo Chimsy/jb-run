@@ -43,14 +43,26 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Background log file configurations
+    | Background log files configurations
     |--------------------------------------------------------------------------
     |
-    | You can customise where to put your background log file here
+    | You can customise where to put your background log files here
     |
     */
 
-    'background_log_directory' => env('BACKGROUND_LOG_DIRECTORY', 'logs/background_jobs.log'),
+    'background_log_directory' => env('BACKGROUND_JOB_LOG_DIRECTORY', 'logs/background_jobs.log'),
+    'background_error_log_directory' => env('BACKGROUND_JOB_ERROR_LOG_DIRECTORY', 'logs/background_jobs.log'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Maximum Retries
+    |--------------------------------------------------------------------------
+    |
+    | You can customise the number of maximum retries
+    |
+    */
+
+    'max_retries' => env('MAX_RETRIES', 3),
 
     /*
     |--------------------------------------------------------------------------
@@ -65,7 +77,7 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
-    'asset_url' => env('ASSET_URL', null),
+    'asset_url' => env('ASSET_URL'),
 
     /*
     |--------------------------------------------------------------------------
