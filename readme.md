@@ -40,6 +40,8 @@ handle job execution with features such as retries, delays, and prioritization.
 - **Version Control:** Git, Fork(Git Client)
 - **IDE:** PhpStorm, Visual Studio Code
 - **Dev Environment:** Valet (PHP, NGINX), MariaDB, PHP 8.3.13, Composer, yarn, node
+- **Laravel Flavour Used:** I used a version of Laravel that comes with AdminLTE admin Template within it. 
+I maintained it upto Laravel 9, You Can Clone it here [LaravelAdminTemplate](https://github.com/Chimsy/LaravelAdminTemplate) 
 
 ## Installation and Setup
 
