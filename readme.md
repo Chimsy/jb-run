@@ -50,8 +50,8 @@ handle job execution with features such as retries, delays, and prioritization.
    ```bash
    mysql -u root -p
    ```
-   
-    Then execute:
+
+   Then execute:
 
    ```sql
    CREATE DATABASE `jb-run`;
@@ -82,7 +82,8 @@ handle job execution with features such as retries, delays, and prioritization.
    php artisan route:clear && php artisan config:clear && php artisan cache:clear && php artisan view:clear && composer dump-autoload
    ```
 7. **Basic System Configuration**
-    Take Note of the following to change the `MAX_RETRIES` and log file location of the `background_jobs` & `background_jobs_error`.
+   Take Note of the following to change the `MAX_RETRIES` and log file location of the `background_jobs` &
+   `background_jobs_error`.
     ```dotenv
     # These Variables Are All Mine
     BACKGROUND_JOB_LOG_DIRECTORY="logs/background_jobs.log"
@@ -156,6 +157,17 @@ BackgroundJobHelper::runBackgroundJob('App\Services\SomeClass', 'someMethod', ['
 
 ## Screenshots
 
+### Dashboard
+
+![Dashboard.png](public/documentation/dashboard.png)
+
+### Background Jobs Log
+
+![Dashboard.png](public/documentation/job_log.png)
+
+### Background Jobs Log Errors
+
+![Dashboard.png](public/documentation/job_log_error.png)
 
 ## License
 
