@@ -38,16 +38,16 @@
                     <td>{{ $job->priority }}</td>
                     <td>{{ $job->error_message }}</td>
                     <td>
-                        @if ($job->status == 'running')
+                        @if ($job->status == 'RUNNING')
                             <form action="{{ route('background-jobs.cancel', $job->id) }}" method="POST">
                                 @csrf
                                 <button type="submit" class="btn btn-danger">Cancel</button>
                             </form>
-                        @elseif ($job->status == 'completed')
+                        @elseif ($job->status == 'COMPLETED')
                             <span class="badge badge-success">Completed</span>
-                        @elseif ($job->status == 'failed')
+                        @elseif ($job->status == 'FAILED')
                             <span class="badge badge-danger">Failed</span>
-                        @elseif ($job->status == 'cancelled')
+                        @elseif ($job->status == 'CANCELLED')
                             <span class="badge badge-warning">Cancelled</span>
                         @else
                             <span class="badge badge-secondary">Unknown</span>
