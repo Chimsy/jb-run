@@ -20,6 +20,8 @@ return new class extends Migration
             $table->text('params')->nullable();
             $table->string('status');
             $table->text('error_message')->nullable();
+            $table->integer('retry_count')->default(0);
+            $table->boolean('is_running')->default(false);
             $table->timestamps();
         });
     }

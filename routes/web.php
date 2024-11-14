@@ -6,7 +6,9 @@ use Illuminate\Support\Facades\Route;
 
 //Route::redirect('/', '/login');
 
-Route::get('/', [BackgroundJobController::class, 'index']);
+Route::get('/', [BackgroundJobController::class, 'index'])->name('background-jobs.index');
+Route::post('/cancel/{id}', [BackgroundJobController::class, 'cancel'])->name('background-jobs.cancel');
+
 Route::redirect('/home', '/admin');
 
 

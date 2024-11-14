@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class BackgroundJob extends Model
 {
-    use HasFactory;
 
     protected $fillable = [
         'class_name',
@@ -15,5 +14,7 @@ class BackgroundJob extends Model
         'params',
         'status',
         'error_message',
+        'retry_count',
+        'is_running',
     ];
 }

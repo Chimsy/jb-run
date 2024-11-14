@@ -51,7 +51,7 @@ class BackgroundJobRunner
 
                 call_user_func_array([$classInstance, $method], $params);
 
-                $job->update(['status' => 'completed']);
+                $job->update(['status' => 'completed', 'is_running' => false]);
 
                 $this->logJobExecution($logFile, $className, $method, 'COMPLETED');
                 $success = true;
@@ -59,7 +59,9 @@ class BackgroundJobRunner
             } catch (Exception $e) {
                 $retries++;
 
-                $job->update(['status' => 'failed', 'error_message' => $e->getMessage()]);
+                $job->increment('retry_count');
+                $job->update(['status' => 'failed', 'error_message' => $e->getMessage(), 'is_running' => false]);
+
 
                 $this->logJobExecution($errorLogFile, $className, $method, 'FAILED', $e->getMessage());
 
