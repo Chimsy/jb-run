@@ -5,15 +5,18 @@
 
 <h3 align="center">Golden (Tapfuma) Chimusinde Technical Assessment</h3>
 
-
 # Job Background System
 
-This documentation provides a detailed explanation of how to use the `runBackgroundJob` function within a Laravel application. The function allows you to run background tasks asynchronously with support for prioritization, delays, retries, and logging.
+This documentation provides a detailed explanation of how to use the `runBackgroundJob` function within a Laravel
+application. The function allows you to run background tasks asynchronously with support for prioritization, delays,
+retries, and logging.
 
 ## Table of Contents
+
 1. [Overview](#overview)
 2. [Technologies & Tools Used](#technologies--tools-used)
 3. [Installation and Setup](#installation-and-setup)
+    - [Initial Setup](#initial-setup)
 4. [Usage](#usage)
     - [Running Background Jobs](#running-background-jobs)
     - [Configuring Retry Attempts](#configuring-retry-attempts)
@@ -24,62 +27,76 @@ This documentation provides a detailed explanation of how to use the `runBackgro
     - [Running a Job with Retry Attempts](#running-a-job-with-retry-attempts)
     - [Running a Job with Delay](#running-a-job-with-delay)
     - [Running a Job with Priority](#running-a-job-with-priority)
-6. [Viewing and Managing Jobs](#viewing-and-managing-jobs)
-7. [License](#license)
+6. [License](#license)
 
 ## Overview
 
-The `runBackgroundJob` function is part of a Laravel application that manages the execution of background tasks. This system includes a database table to store job information, a model to interact with the table, and several classes to handle job execution with features such as retries, delays, and prioritization.
+The `runBackgroundJob` function is part of a Laravel application that manages the execution of background tasks. This
+system includes a database table to store job information, a model to interact with the table, and several classes to
+handle job execution with features such as retries, delays, and prioritization.
 
 ## Technologies & Tools Used
-- **Version Control:** Git, Fork(Git Client)
-- **IDE:** PhpStorm, Visual Studio Code.
-- **Dev Environment:** Valet (PHP, NGINX,), MariaDB, Php 8.3.13, Composer, yarn, node.
 
+- **Version Control:** Git, Fork(Git Client)
+- **IDE:** PhpStorm, Visual Studio Code
+- **Dev Environment:** Valet (PHP, NGINX), MariaDB, PHP 8.3.13, Composer, yarn, node
 
 ## Installation and Setup
 
-### Step 1: Initial Setup 
+### Initial Setup
 
-Create a database called: `jb-run` using any DBMS of your choice
+1. **Create a Database**: Create a database called: `jb-run` using any DBMS of your choice. For MySQL, run:
 
-```bash
-mysql -u root -p
-```
+   ```bash
+   mysql -u root -p
+   ```
+   
+    Then execute:
 
-```mysql
-CREATE DATABASE `jb-run`;
-```
+   ```sql
+   CREATE DATABASE `jb-run`;
+   ```
 
-Copy `.env.example` into `.env`. Take Close Attention and add database credentials and the system variables at the bottom of the `.env` file
+2. **Copy `.env.example` to `.env`**:
+   ```bash 
+   cp .env.example .env
+   ```
 
-```bash
-cp .env.example .env
-```
-Generate Application key
+3. **Update `.env` File**:
+   Add your database credentials and necessary system variables at the bottom of the `.env` file.
 
-```bash
-php artisan key:generate
-```
+4. **Generate Application Key**:
+   ```bash
+   php artisan key:generate
+   ```
 
-Once All is Set with the env file run the following commands in the following order:
-```bash
-composer update
-yarn install
-```
+5. **Install Dependencies**:
+   ```bash
+   composer update
+   yarn install
+   ```
 
-Bundled Laravel to get things going
-```bash
-php artisan migrate:fresh --force --seed -v
-php artisan route:clear && php artisan config:clear && php artisan cache:clear && php artisan view:clear && composer dump-autoload
-```
+6. **Set Up Laravel**:
+   ```bash
+   php artisan migrate:fresh --force --seed -v
+   php artisan route:clear && php artisan config:clear && php artisan cache:clear && php artisan view:clear && composer dump-autoload
+   ```
+7. **Basic System Configuration**
+    Take Note of the following to change the `MAX_RETRIES` and log file location of the `background_jobs` & `background_jobs_error`.
+    ```dotenv
+    # These Variables Are All Mine
+    BACKGROUND_JOB_LOG_DIRECTORY="logs/background_jobs.log"
+    BACKGROUND_JOB_ERROR_LOG_DIRECTORY="logs/background_jobs_error.log"
+    MAX_RETRIES=3
+    ```
 
-
-### Step 2: Usage
+## Usage
 
 ### Running Background Jobs
 
-The `runBackgroundJob` function allows you to run any method in any class asynchronously. It takes four parameters:
+The `runBackgroundJob` function allows you to run any method in any class asynchronously. It takes the following
+parameters:
+
 - `className`: The fully qualified name of the class containing the method to run.
 - `method`: The name of the method to execute.
 - `params`: An array of parameters to pass to the method (optional).
@@ -137,15 +154,9 @@ BackgroundJobHelper::runBackgroundJob('App\Services\SomeClass', 'someMethod', ['
 BackgroundJobHelper::runBackgroundJob('App\Services\SomeClass', 'someMethod', ['param1', 'param2'], 5);
 ```
 
-## Viewing and Managing Jobs
-
-### Create the Blade Template
-
-Create a Blade template to display background jobs:
+## Screenshots
 
 
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
----
