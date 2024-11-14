@@ -36,12 +36,10 @@ class BackgroundJobRunner
                     throw new Exception("Method $method Not Found in Class $className.");
                 }
 
-                // Log job is running
                 $this->logJobExecution($logFile, $className, $method, 'RUNNING');
 
                 call_user_func_array([$classInstance, $method], $params);
 
-                // Log job success
                 $this->logJobExecution($logFile, $className, $method, 'COMPLETED');
                 $success = true;
 
@@ -49,7 +47,7 @@ class BackgroundJobRunner
                 $retries++;
                 $this->logJobExecution($errorLogFile, $className, $method, 'FAILED', $e->getMessage());
 
-                if ($retries >= $this->maxRetries) {
+                if ($retries >= $maxRetries) {
                     $this->logJobExecution($logFile, $className, $method, 'FAILED');
                 }
             }
